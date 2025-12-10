@@ -10,10 +10,12 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { useAuth } from '@/context/auth-context';
 
 const navItems = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
@@ -26,6 +28,7 @@ const navItems = [
 export function AppSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   return (
     <aside
@@ -85,6 +88,38 @@ export function AppSidebar() {
           );
         })}
       </nav>
+
+      {/* User Info */}
+      {user && (
+        <div className="p-3 border-t border-sidebar-border">
+          <div className={cn(
+            'flex items-center gap-2',
+            collapsed && 'flex-col justify-center'
+          )}>
+            <div className="flex-1 min-w-0">
+              {!collapsed && (
+                <>
+                  <p className="text-sm font-medium text-sidebar-foreground truncate">
+                    {user.user_metadata?.full_name || user.email}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {user.email}
+                  </p>
+                </>
+              )}
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={signOut}
+              className="h-9 w-9 flex-shrink-0"
+              title="Sign out"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Footer with Theme Toggle and Collapse */}
       <div className="p-3 border-t border-sidebar-border">
