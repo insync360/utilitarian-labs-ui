@@ -16,6 +16,8 @@ import { AuthProvider } from "./context/auth-context";
 import { ProtectedRoute } from "./components/auth/protected-route";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +38,8 @@ const App = () => (
               {/* Public Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>
